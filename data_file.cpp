@@ -14,7 +14,7 @@ Data_File::Data_File(QString path, QString destiny)
 
     Frequency(contador);//calculando a frequencia dos caracteres de bytes
 
-    SaveData(bytes,destiny,"Test");//copiando arquivo para testar se o mesmo está recebendo todos os dados corretamente
+//    SaveData(bytes,destiny,"Test");//copiando arquivo para testar se o mesmo está recebendo todos os dados corretamente
 
     Sort();
 
@@ -38,10 +38,10 @@ void Data_File::Data_Receive(QString path)
 //        cout << sizeData - position << endl;
         bytes = new unsigned char[sizeData - position];//declarando o array que portará os bytes
         data.read((char *)bytes,sizeData - position);//lendo os bytes
-//        for(int i = 0; i < (int)strlen((char *)bytes); i ++)
-//        {
+        for(int i = 0; i < (int)strlen((char *)bytes); i ++)
+        {
 //            cout << bytes[i];
-//        }
+        }
         Frequency(sizeData - position);
         data.close();//fechando o arquivo
         goto end;
@@ -51,10 +51,10 @@ void Data_File::Data_Receive(QString path)
     {
         bytes = new unsigned char[10];//declarando o array que portará os bytes
         data.read((char *)bytes,10);//lendo os bytes
-//        for(int i = 0; i < (int)strlen((char *)bytes); i ++)
-//        {
+        for(int i = 0; i < (int)strlen((char *)bytes); i ++)
+        {
 //            cout << bytes[i];
-//        }
+        }
         Frequency(10);
 
     }
@@ -104,6 +104,8 @@ void Data_File::SaveFrequency(QString path, QString Name)
 
     ofstream out(archive);//salvando o arquivo
 
+    int sum = 0;
+
     for( int i = 0 ; i < 256 ; i++ )//passando os bytes em formato char para o arquivo
     {
 
@@ -113,14 +115,8 @@ void Data_File::SaveFrequency(QString path, QString Name)
             out << (static_cast<int>(data_frequency[i][0]))/* << "||" << (char)data_frequency[i][1]*/  << " ";
 
         }
-
-    }
-
-    int sum = 0;//verificando soma das frequencias para ver se está com o tamnho total do arquivo
-
-    for( int i = 0; i < 256 ; i++)
-    {
         sum += (static_cast<int>(data_frequency[i][0]));
+
     }
 
     out << sum;//passando soma para o final do arquivo

@@ -17,12 +17,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     data_file.cpp \
-    file.cpp \
     tree.cpp \
-    node.cpp
+    node.cpp \
+    codification.cpp
 
 HEADERS += \
     data_file.h \
-    file.h \
     tree.h \
-    node.h
+    node.h \
+    codification.h

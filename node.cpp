@@ -6,6 +6,7 @@ Node::Node()
     type = 0;
     left = 0;
     right = 0;
+    mapKey = 0;
 }
 Node::Node(int i)
 {
@@ -13,6 +14,7 @@ Node::Node(int i)
     type = 0;
     left = 0;
     right = 0;
+    mapKey = 0;
 }
 
 //bool Node::isSingle()
@@ -32,11 +34,6 @@ Node::Node(int i)
 //    }
 //    return answer;
 //}
-
-void Node::incFrequency(int increase)
-{
-    this->frequency += increase;
-}
 
 int Node::getFrequency() const
 {
@@ -86,4 +83,14 @@ void Node::setType(bool i)
 bool Node::getType()
 {
     return type;
+}
+
+void Node::setMapKey(bool i)
+{
+    mapKey = i;
+}
+
+bool Node::getMapKey()
+{
+    return mapKey;
 }

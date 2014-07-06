@@ -1,6 +1,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <QString>
+
 class Node
 {
     int frequency;
@@ -8,14 +10,12 @@ class Node
     Node *right;
     Node *left;
     bool type;
+    int mapKey;
 
 public:
 
     Node();
     Node(int i);
-//    bool isSingle();
-//    bool isLeaf();
-    void incFrequency(int increase);
     int getFrequency() const;
     void setFrequency(int frequency);
     unsigned char getByte()const ;
@@ -26,6 +26,8 @@ public:
     void setRight(const Node *right);
     void setType(bool i);
     bool getType();
+    void setMapKey(bool i);
+    bool getMapKey();
 };
 
 #endif // NODE_H

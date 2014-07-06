@@ -29,9 +29,9 @@ public:
     QList<Node *> toList();
 
     int contador;
+    long sizeData;
 private:
 
-    long sizeData;
     unsigned char *bytes;
     long int data_frequency[256][2];
     QString type;
