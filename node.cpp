@@ -7,6 +7,7 @@ Node::Node()
     left = 0;
     right = 0;
     mapKey = 0;
+    parent = 0;
 }
 Node::Node(int i)
 {
@@ -15,25 +16,17 @@ Node::Node(int i)
     left = 0;
     right = 0;
     mapKey = 0;
+    parent = 0;
 }
-
-//bool Node::isSingle()
-//{
-//    bool answer = true;
-//    if(this->left != 0 && this->right != 0){
-//        answer = false;
-//    }
-//    return answer;
-//}
-
-//bool Node::isLeaf()
-//{
-//    bool answer = false;
-//    if(this->left == 0 && this->right == 0){
-//        answer = true;
-//    }
-//    return answer;
-//}
+Node::Node(Node *pai)
+{
+    frequency = 0;
+    type = 0;
+    left = 0;
+    right = 0;
+    mapKey = 0;
+    parent = pai;
+}
 
 int Node::getFrequency() const
 {
@@ -60,9 +53,10 @@ Node *Node::getLeft()const
     return left;
 }
 
-void Node::setLeft(const Node *left)
+void Node::setLeft(Node *left)
 {
-    this->left = (Node*)left;
+    this->left = left;
+    left->setParent(this);
 }
 
 Node *Node::getRight()const
@@ -70,9 +64,10 @@ Node *Node::getRight()const
     return right;
 }
 
-void Node::setRight(const Node *right)
+void Node::setRight(Node *right)
 {
-    this->right = (Node*)right;
+    this->right = right;
+    right->setParent(this);
 }
 
 void Node::setType(bool i)
@@ -94,3 +89,14 @@ bool Node::getMapKey()
 {
     return mapKey;
 }
+
+Node *Node::getParent()
+{
+    return parent;
+}
+
+Node *Node::setParent(Node *node)
+{
+    parent = node;
+}
+

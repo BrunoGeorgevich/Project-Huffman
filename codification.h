@@ -9,12 +9,12 @@ class Codification
 public:
 
     Codification();
-    char symbol;
+    unsigned char symbol;
     QString BinSymbol;
 
 public:
 
-    void define(char nextSymbol , QString BinaryS);
+    void define(unsigned char nextSymbol , QString BinaryS);
 
 };
 

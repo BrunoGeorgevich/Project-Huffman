@@ -5,64 +5,128 @@
 
 using namespace std;
 
-int main()
+void Ajuda(){
+    cout << "{...........}Huffman HELP{................}" << endl ;
+    cout << "{.........................................}" << endl ;
+    cout << " -c 'file'  para comprimir o arquivo." << endl ;
+    cout << " -c 'file' -o 'Nome_de_Saida.huff''  comprimir alterando o nome." << endl ;
+    cout << "{.........................................}" << endl ;
+    cout << " file.huff descomprimir o arquivo." << endl ;
+    cout << " file.huff -d 'caminho_de_saida' // Descomprimi o arquivo em um caminho diferente" << endl ;
+    cout << "{.........................................}" << endl ;
+}
+QString GetName(QString name)
 {
-//    Data_File file("../../Project-Huffman/Arquivos/black.png","../../Project-Huffman/Test/");//Testando com Imagem
-//    Data_File file("../../Project-Huffman/Arquivos/final.wav","../../Project-Huffman/Test/");//Testando com Musica Pequena
-//    Data_File file("../../Project-Huffman/Arquivos/Nothing Else Matters.mp3","../../Project-Huffman/Test/");//Testando com Musica Grande
-    Data_File file("../../Project-Huffman/Arquivos/in.txt","../../Project-Huffman/Test/");//Testando com Texto
+    int size = name.size();
 
-    QList<Node*> list = file.toList();
+    QString nome = "";
+    for(int i = size; i > 0; i--)//identificando a extensão do arquivo
+    {
+        if(name[i - 1] == '/')
+        {
+            int k = i;
+            for(int j = 0; j < size - k; j++, i++){
 
-//    for(int i = 0 ; i < list.size(); i++)
-//    {
-//        if(list.at(i)->getByte() == 10)
-//        {
-//            cout << "ETR.." << list.at(i)->getFrequency() <<  " ";
-//            goto here;
-//        }
+                nome[j] = name[i];//armazenando extensão na QString type
 
-//        cout << list.at(i)->getByte() << ".." << list.at(i)->getFrequency() << " ";
-//        here:;
-//    }
-//    cout << endl;
-
-    Tree test(list);
-
-    test.fill();
-    test.print(test.root);
-
-    cout << endl;
-    cout << endl;
-    test.MinimizedForm(test.root);
-    cout << qPrintable(test.BinTree) << endl;
-    cout << endl;
-    cout << endl;
-
-    test.WritingCodification();
-    QString binary = test.Data_Codification("../../Project-Huffman/Arquivos/in.txt","../../Project-Huffman/Test/");
-
-    char * bin = new char[binary.size()];
-    bin = binary.toLatin1().data();
-
-    cout << "Tamanho da string : " << strlen(bin) << endl;
-
-    char *archive = "../../Project-Huffman/Test/in.txt";//Unindo o nome do arquivo + a extensão do mesmo + o caminho para salva-lo
-
-    ofstream out(archive);//salvando o arquivo
-
-    cout << binary.size() << endl;
-
-    for( int i = 0 ; i <= strlen(bin) ; i++ ){//passando os bytes em formato char para o arquivo
-
-        cout << i << endl;
-        out << ((bin[i]));
-
+            }
+            break;
+        }
     }
 
-    unsigned short a = test.SizeTrashTree();
+    return nome;
 
-    cout << a << endl;
+}
+
+int main(int argc, char *argv[])
+{
+    QString a;
+    a = argv[1];
+    QString b;
+    b = argv[2];
+    QString c;
+    c = argv[3];
+    QString d;
+    d = argv[4];
+
+
+
+    if(argc <= 6){
+        if(a=="-h"){
+            Ajuda();
+        }
+
+        else if(a == "-c"){
+            Data_File file(b);//Testando com Imagem
+
+
+            QList<Node*> list = file.toList();
+
+            Tree test(list);
+            test.fill();
+            test.MinimizedForm(test.root);
+
+            test.WritingCodification();
+            test.Data_Codification(b,"",GetName(b));
+
+            if(c == "-o"){
+                if(d.contains(".huff"))
+                {
+                    Data_File file(b);
+
+                    QList<Node*> list = file.toList();
+
+                    Tree test(list);
+                    test.fill();
+                    test.MinimizedForm(test.root);
+
+                    test.WritingCodification();
+                    test.Data_Codification(b,"",d);
+
+                } else {
+                    cout << "Comando Inexistente. Digite -h para que apareção as instruções." << endl;
+                }
+            } else {
+
+                Data_File file(b);//Testando com Imagem
+
+
+                QList<Node*> list = file.toList();
+
+                Tree test(list);
+                test.fill();
+                test.MinimizedForm(test.root);
+
+                test.WritingCodification();
+                test.Data_Codification(b,"","out.huff");
+            }
+
+        }
+        else if(a.contains(".huff"))
+        {
+
+            Tree test;
+            test.Data_Decodification(a,"");
+
+
+            if(b=="-d")
+            {
+                Tree test;
+                test.Data_Decodification(a,c);
+            }
+            else
+            {
+                Tree test;
+                test.Data_Decodification(a,"");
+            }
+        } else {
+            cout << "Comando Inexistente. Digite -h para que apareção as instruções." << endl;
+        }
+    }
+
+    else {
+        cout << "Comando Inexistente. Digite -h para que apareção as instruções." << endl;
+    }
 
     return 0;
 }

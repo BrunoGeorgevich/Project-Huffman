@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core
+QT       += core gui
 
-QT       -= gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Project
 CONFIG   += console
@@ -19,10 +19,15 @@ SOURCES += main.cpp \
     data_file.cpp \
     tree.cpp \
     node.cpp \
-    codification.cpp
+    codification.cpp \
+    menu_inicial.cpp
 
 HEADERS += \
     data_file.h \
     tree.h \
     node.h \
-    codification.h
+    codification.h \
+    menu_inicial.h
+
+FORMS += \
+    menu_inicial.ui

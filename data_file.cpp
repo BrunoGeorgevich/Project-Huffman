@@ -1,6 +1,6 @@
 #include "data_file.h"
 
-Data_File::Data_File(QString path, QString destiny)
+Data_File::Data_File(QString path)
 {
     contador = 0;
 
@@ -18,7 +18,9 @@ Data_File::Data_File(QString path, QString destiny)
 
     Sort();
 
-    SaveFrequency(destiny,"Frequency");//salvando a frequência em um arquivo
+//    SaveFrequency(destiny,"Frequency");//salvando a frequência em um arquivo
+
+    delete[] bytes;
 }
 
 void Data_File::Data_Receive(QString path)
@@ -112,7 +114,7 @@ void Data_File::SaveFrequency(QString path, QString Name)
         if((static_cast<int>(data_frequency[i][0])) != 0)
         {
 
-            out << (static_cast<int>(data_frequency[i][0]))/* << "||" << (char)data_frequency[i][1]*/  << " ";
+            out << (static_cast<int>(data_frequency[i][0])) << "||" << (int)data_frequency[i][1]  << " ";
 
         }
         sum += (static_cast<int>(data_frequency[i][0]));

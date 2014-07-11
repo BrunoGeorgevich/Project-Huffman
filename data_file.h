@@ -15,7 +15,7 @@ class Data_File
 {
 public:
 
-    Data_File(QString path, QString destiny);
+    Data_File(QString path);
 
     void Data_Receive(QString path);
     void FindExtension(QString path);

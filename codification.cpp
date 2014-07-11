@@ -3,10 +3,10 @@
 Codification::Codification()
 {
     symbol = 0;
-    BinSymbol = "***";
+    BinSymbol = "";
 }
 
-void Codification::define(char nextSymbol, QString BinaryS)
+void Codification::define(unsigned char nextSymbol, QString BinaryS)
 {
     symbol = nextSymbol;
     BinSymbol = BinaryS;
