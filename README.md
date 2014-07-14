@@ -1,4 +1,0 @@
-Project-Huffman
-===============
-
-Huffman

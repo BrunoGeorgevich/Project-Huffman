@@ -8,8 +8,6 @@ Data_File::Data_File(QString path)
 
     calcSizeData(path);
 
-    FindExtension(path);
-
     Data_Receive(path);//Passando toda a Data do arquivo para o unsigned char *bytes
 
     Frequency(contador);//calculando a frequencia dos caracteres de bytes
@@ -177,15 +175,15 @@ void Data_File::Sort()//algoritmo modificado do Insertion Sort, ele ordena as fr
     }
 }
 
-QList<Node*> Data_File::toList()
+QList<EncondingNode *> Data_File::toList()
 {
-    QList<Node*> list;
+    QList<EncondingNode*> list;
 
     for(int i = 0; i < 256; i ++)
     {
         if(data_frequency[i][0] != 0 /*&& data_frequency[i][1] != 10 && data_frequency[i][1] != 13*/)
         {
-            Node *node = new Node;
+            EncondingNode *node = new EncondingNode;
             node->setFrequency(data_frequency[i][0]);
             node->setByte(data_frequency[i][1]);
 //            cout << node->getFrequency() << " ";

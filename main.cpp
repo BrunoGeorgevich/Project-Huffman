@@ -1,41 +1,27 @@
-#include "data_file.h"
-#include "tree.h"
-#include "codification.h"
+#include "encodingTree.h"
+#include "decodingtree.h"
 #include <iostream>
+
+#include <QApplication>
+#include "menu_inicial.h"
 
 using namespace std;
 
 void Ajuda(){
-    cout << "{...........}Huffman HELP{................}" << endl ;
-    cout << "{.........................................}" << endl ;
-    cout << " -c 'file'  para comprimir o arquivo." << endl ;
-    cout << " -c 'file' -o 'Nome_de_Saida.huff''  comprimir alterando o nome." << endl ;
-    cout << "{.........................................}" << endl ;
-    cout << " file.huff descomprimir o arquivo." << endl ;
-    cout << " file.huff -d 'caminho_de_saida' // Descomprimi o arquivo em um caminho diferente" << endl ;
-    cout << "{.........................................}" << endl ;
-}
-QString GetName(QString name)
-{
-    int size = name.size();
 
-    QString nome = "";
-    for(int i = size; i > 0; i--)//identificando a extensão do arquivo
-    {
-        if(name[i - 1] == '/')
-        {
-            int k = i;
-            for(int j = 0; j < size - k; j++, i++){
-
-                nome[j] = name[i];//armazenando extensão na QString type
-
-            }
-            break;
-        }
-    }
-
-    return nome;
-
+    cout << endl << endl;
+    cout << "{..........................}Huffman HELP{.............................}" << endl << endl;
+    cout << "{...........................Compressão................................}" << endl<< endl ;
+    cout << "[-c] 'file' -> para comprimir o arquivo." << endl << endl ;
+    cout << "[-c] 'file' [-o] 'Nome_de_Saida.huff'' - >  comprimir alterando o nome." << endl << endl;
+    cout << "{..........................Descompressão..............................}" << endl << endl;
+    cout << "file.huff -> descomprimir o arquivo." << endl << endl ;
+    cout << "file.huff [-d] 'caminho_saida' -> Descomprimir em uma pasta diferente" << endl << endl ;
+    cout << "{.....................................................................}" << endl << endl;
+    cout << "{.......................Interface..Gráfica............................}" << endl << endl;
+    cout << "[--gui] -> Executará o programa com uma Interface Gráfica" << endl << endl ;
+    cout << "{.....................................................................}" << endl << endl;
+    cout << endl << endl;
 }
 
 int main(int argc, char *argv[])
@@ -51,82 +37,101 @@ int main(int argc, char *argv[])
 
 
 
-    if(argc <= 6){
-        if(a=="-h"){
+    if( argc <= 6 || argc >= 2 )
+    {
+        if( a=="-h" )
+        {
             Ajuda();
         }
 
-        else if(a == "-c"){
-            Data_File file(b);//Testando com Imagem
+        else if( a == "-c" )
+        {
+
+            EncodingTree a(b);
 
 
-            QList<Node*> list = file.toList();
-
-            Tree test(list);
-            test.fill();
-            test.MinimizedForm(test.root);
-
-            test.WritingCodification();
-            test.Data_Codification(b,"",GetName(b));
-
-            if(c == "-o"){
+            if( c == "-o" )
+            {
                 if(d.contains(".huff"))
                 {
-                    Data_File file(b);
 
-                    QList<Node*> list = file.toList();
+                    EncodingTree a(b, d);
 
-                    Tree test(list);
-                    test.fill();
-                    test.MinimizedForm(test.root);
+                    cout << endl << "-----------------------------------------------------------------"
+                         << endl << "             Compressão realizada com Sucesso!!"
+                         << endl << "-----------------------------------------------------------------"
+                         << endl << endl;
 
-                    test.WritingCodification();
-                    test.Data_Codification(b,"",d);
-
-                } else {
-                    cout << "Comando Inexistente. Digite -h para que apareção as instruções." << endl;
                 }
-            } else {
 
-                Data_File file(b);//Testando com Imagem
+                else
+                {
+                    cout << endl << "-----------------------------------------------------------------"
+                         << endl << "                     Compressão Falhou!!!!"
+                         << endl << "-----------------------------------------------------------------"
+                         << endl << "Necessário que o Novo Nome do arquivo acompanhe o .huff no final."
+                         << endl << "-----------------------------------------------------------------"
+                         << endl << endl;
+                }
+            }
 
+            else
+            {
 
-                QList<Node*> list = file.toList();
+                EncodingTree a(b);
 
-                Tree test(list);
-                test.fill();
-                test.MinimizedForm(test.root);
-
-                test.WritingCodification();
-                test.Data_Codification(b,"","out.huff");
+                cout << endl << "-----------------------------------------------------------------"
+                     << endl << "               Compressão realizada com Sucesso!!"
+                     << endl << "-----------------------------------------------------------------"
+                     << endl << endl;
             }
 
         }
+
         else if(a.contains(".huff"))
         {
 
-            Tree test;
-            test.Data_Decodification(a,"");
+            DecodingTree *Decode = new DecodingTree;
 
-
-            if(b=="-d")
+            if( b == "-d" )
             {
-                Tree test;
-                test.Data_Decodification(a,c);
+                Decode->decodeFile(a,c);
             }
+
             else
             {
-                Tree test;
-                test.Data_Decodification(a,"");
+                Decode->decodeFile(a,"");
             }
-        } else {
-            cout << "Comando Inexistente. Digite -h para que apareção as instruções." << endl;
         }
-    }
 
-    else {
-        cout << "Comando Inexistente. Digite -h para que apareção as instruções." << endl;
-    }
+        else if(a == "--gui")
+        {
+            QApplication a(argc,argv);
+            a.setStyleSheet("QWidget {background-color : white}");
+            a.setStyleSheet("QMainWindow {border-image : url(:/Resource/Resource/background.jpg);}");
+            Menu_Inicial w;
+            w.show();
 
-    return 0;
+            return a.exec();
+        }
+
+        else
+        {
+            cout << endl << "-----------------------------------------------------------------"
+                 << endl << " Comando Inexistente. Digite -h para que apareção as instruções."
+                 << endl << "-----------------------------------------------------------------"
+                 << endl << endl;
+        }
+}
+
+     else
+     {
+        cout << endl << "-----------------------------------------------------------------"
+             << endl << " Comando Inexistente. Digite -h para que apareção as instruções."
+             << endl << "-----------------------------------------------------------------"
+             << endl << endl;
+     }
+
+        return 0;
+
 }

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "node.h"
+#include "encodingNode.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ public:
     void Frequency(int cont);
     void calcSizeData(QString path);
     void Sort();
-    QList<Node *> toList();
+    QList<EncondingNode *> toList();
 
     int contador;
     long sizeData;
